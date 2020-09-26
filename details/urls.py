@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^api/mentor$', views.student_only),
     url(r'^api/mentor/(?P<pk>[0-9]+)$', views.student_onlybyid),
 
+    url(r'^api/mentor$', views.student_list),
+    url(r'^api/mentor/(?P<pk>[0-9]+)$', views.student_listbyid),
 ]

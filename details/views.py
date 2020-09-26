@@ -163,3 +163,32 @@ def student_onlybyid(request, pk):
             return JsonResponse({'message': 'student was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
     except Student.DoesNotExist:
         return JsonResponse({'message': 'The student does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+def student_list(request):
+    # Get all student list
+    if request.method == 'GET':
+        details = Student.objects.all()
+
+        student = request.GET.get('student', None)
+        if student is not None:
+            details = details.filter(student__icontains=student)
+
+        details_serializer = StudentSerializer(details, many=True)
+        return JsonResponse(details_serializer.data, safe=False)
+    elif request.method == '':
+        return JsonResponse({'message': 'method is blank!'}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def student_listbyid(request, pk):
+    try:
+        student = Student.objects.get(pk=pk)
+        if request.method == 'GET':
+            detail_serializer = StudentSerializer(student)
+            return JsonResponse(detail_serializer.data)
+        elif request.method == '':
+            return JsonResponse({'message': 'method is blank!'}, status=status.HTTP_204_NO_CONTENT)
+    except Student.DoesNotExist:
+        return JsonResponse({'message': 'The student does not exist'}, status=status.HTTP_404_NOT_FOUND)
