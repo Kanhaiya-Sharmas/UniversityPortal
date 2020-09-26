@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Adding for Details app
     'rest_framework',
-    'tutorials.apps.TutorialsConfig',
+    'details.apps.DetailsConfig',
     'corsheaders',
 ]
 
