@@ -1,12 +1,25 @@
 from rest_framework import serializers
-from details.models import Details
+from details.models import Mentor
+from details.models import Student
 
 
-class DetailsSerializer(serializers.ModelSerializer):
+class MentorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Details
+        model = Mentor
         fields = ('id',
-                  'Mentor_Name',
-                  'Student_Name',
-                  'Status',
+                  'mentor',
+                  'lecture',
+                  'status',
+                  'Remark')
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ('id',
+                  'student',
+                  'math',
+                  'physics',
+                  'english',
+                  'status',
                   'Remark')
