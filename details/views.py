@@ -101,7 +101,50 @@ def student_full(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def mentor_byid(request, pk):
+def student_byid(request, pk):
+    try:
+        student = Student.objects.get(pk=pk)
+
+        if request.method == 'GET':
+            detail_serializer = StudentSerializer(student)
+            return JsonResponse(detail_serializer.data)
+        elif request.method == 'PUT':
+            detail_data = JSONParser().parse(request)
+            detail_serializer = StudentSerializer(student, data=detail_data)
+            if detail_serializer.is_valid():
+                detail_serializer.save()
+                return JsonResponse(detail_serializer.data)
+            return JsonResponse(detail_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        elif request.method == 'DELETE':
+            student.delete()
+            return JsonResponse({'message': 'student was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+    except Student.DoesNotExist:
+        return JsonResponse({'message': 'The student does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET', 'POST', 'DELETE'])
+def student_only(request):
+    # Get all student list
+    if request.method == 'GET':
+        details = Student.objects.all()
+
+        student = request.GET.get('student', None)
+        if student is not None:
+            details = details.filter(student__icontains=student)
+
+        details_serializer = StudentSerializer(details, many=True)
+        return JsonResponse(details_serializer.data, safe=False)
+    # Add a new student
+    elif request.method == 'POST':
+        student_data = JSONParser().parse(request)
+        student_serializer = StudentSerializer(data=student_data)
+        if student_serializer.is_valid():
+            student_serializer.save()
+            return JsonResponse(student_serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def student_onlybyid(request, pk):
     try:
         student = Student.objects.get(pk=pk)
 
