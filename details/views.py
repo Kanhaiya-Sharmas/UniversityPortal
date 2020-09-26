@@ -100,28 +100,6 @@ def student_full(request):
                             status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def student_byid(request, pk):
-    try:
-        student = Student.objects.get(pk=pk)
-
-        if request.method == 'GET':
-            detail_serializer = StudentSerializer(student)
-            return JsonResponse(detail_serializer.data)
-        elif request.method == 'PUT':
-            detail_data = JSONParser().parse(request)
-            detail_serializer = StudentSerializer(student, data=detail_data)
-            if detail_serializer.is_valid():
-                detail_serializer.save()
-                return JsonResponse(detail_serializer.data)
-            return JsonResponse(detail_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        elif request.method == 'DELETE':
-            student.delete()
-            return JsonResponse({'message': 'student was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
-    except Student.DoesNotExist:
-        return JsonResponse({'message': 'The student does not exist'}, status=status.HTTP_404_NOT_FOUND)
-
-
 @api_view(['GET', 'POST', 'DELETE'])
 def student_only(request):
     # Get all student list
