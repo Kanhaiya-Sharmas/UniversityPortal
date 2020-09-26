@@ -56,6 +56,11 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8081',
+)
+
 ROOT_URLCONF = 'College.urls'
 
 TEMPLATES = [
