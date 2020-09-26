@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Adding for Details app
     'rest_framework',
     'tutorials.apps.TutorialsConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
