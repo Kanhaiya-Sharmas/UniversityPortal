@@ -2,7 +2,7 @@ from rest_framework import serializers
 from details.models import Details
 
 
-class TutorialSerializer(serializers.ModelSerializer):
+class DetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Details
         fields = ('id',
