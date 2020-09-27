@@ -1,7 +1,7 @@
 # UniversityPortal
 First Project For Testing
 
-# essential for projects
+# essential for projects:
 1.VirtualEenv
 2.Used Django & Dependencies
 $ django
